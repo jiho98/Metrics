@@ -4,18 +4,21 @@ document.addEventListener('DOMContentLoaded', (event) => {
     const breadcrumbContainer = document.getElementById(breadcrumbElementId);
     if (!breadcrumbContainer) return;
 
+    const homeLink = 'https://jiho98.github.io/Metrics/'; // URL for 'Home'
     const pathnames = window.location.pathname.split('/').filter(Boolean);
-    let breadcrumbInnerHTML = '<a href="/">Home</a>'; // Starting with 'Home' link
+    let breadcrumbInnerHTML = `<a href="${homeLink}">Home</a>`; // Starting with 'Home' link
 
-    let path = '';
-    for (let i = 0; i < pathnames.length; i++) {
+    let path = homeLink; // Initialize path with homeLink
+    for (let i = 1; i < pathnames.length; i++) { // Start loop from 1 to skip 'Metrics' in the path
         const segment = pathnames[i];
-        if (segment.toLowerCase() === 'index.html') {
-            continue; // Skip 'index.html'
+        if (segment.toLowerCase() === 'index.html' || segment.toLowerCase() === 'metrics') {
+            continue; // Skip 'index.html' and 'Metrics'
         }
 
-        // Construct the path incrementally
-        path += `/${segment}`;
+        // Construct the path incrementally, if not the first segment after 'Home'
+        if (i > 1) {
+            path += '/' + segment;
+        }
 
         // Decode URI components to get a readable format and remove file extension
         const readableSegment = decodeURIComponent(segment.replace(/\.\w+$/, ''));
@@ -25,8 +28,8 @@ document.addEventListener('DOMContentLoaded', (event) => {
             // Last item is active and not a link
             breadcrumbInnerHTML += ` <span class="breadcrumb-item active" aria-current="page">${readableSegment}</span>`;
         } else {
-            // Add a space and a slash before each segment after 'Home'
-            breadcrumbInnerHTML += ` / <a href="${path}/" class="breadcrumb-item">${readableSegment}</a>`;
+            // Add a slash before each segment after 'Home'
+            breadcrumbInnerHTML += ` / <a href="${path}" class="breadcrumb-item">${readableSegment}</a>`;
         }
     }
 
