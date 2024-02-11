@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
     const breadcrumbContainer = document.getElementById(breadcrumbElementId);
     if (!breadcrumbContainer) return;
 
-    const homeLink = 'https://jiho98.github.io/Metrics/'; // URL for 'Home'
+    const homeLink = 'https://jiho98.github.io/Metrics/'; // Updated URL for 'Home'
     const pathnames = window.location.pathname.split('/').filter(Boolean);
     let breadcrumbInnerHTML = `<a href="${homeLink}">Home</a>`; // Starting with 'Home' link
 
@@ -18,20 +18,14 @@ document.addEventListener('DOMContentLoaded', (event) => {
         // Construct the path incrementally, if not the first segment after 'Home'
         if (i > 1) {
             path += '/' + segment;
-        }
-
-        // Decode URI components to get a readable format and remove file extension
-        const readableSegment = decodeURIComponent(segment.replace(/\.\w+$/, ''));
-
-        // Check if this is the last segment
-        if (i === pathnames.length - 1) {
-            // Last item is active and not a link
-            breadcrumbInnerHTML += ` <span class="breadcrumb-item active" aria-current="page">${readableSegment}</span>`;
         } else {
-            // Add a slash before each segment after 'Home'
-            breadcrumbInnerHTML += ` / <a href="${path}" class="breadcrumb-item">${readableSegment}</a>`;
+            path += segment;
         }
+
+        // Add a breadcrumb for the current segment
+        breadcrumbInnerHTML += ` &gt; <a href="${path}">${decodeURIComponent(segment)}</a>`;
     }
 
-    breadcrumbContainer.innerHTML = `<nav aria-label="breadcrumb" class="breadcrumb">${breadcrumbInnerHTML}</nav>`;
+    // Set the innerHTML of the breadcrumb container
+    breadcrumbContainer.innerHTML = breadcrumbInnerHTML;
 });
