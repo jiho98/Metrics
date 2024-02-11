@@ -1,0 +1,19 @@
+/* styles.css */
+.breadcrumb {
+    padding: 10px; /* Some padding */
+    display: inline-block; /* Aligning items in a row */
+    list-style: none; /* Removes default list styles */
+    white-space: nowrap; /* Prevents wrapping and ensures spacing */
+}
+
+.breadcrumb a, .breadcrumb span {
+    color: blue; /* Blue text color */
+    text-decoration: none; /* No underline */
+    padding: 0 5px; /* Adds spacing around the breadcrumb items */
+}
+
+.breadcrumb span.active {
+    color: blue; /* Blue text color for the current page */
+    pointer-events: none; /* Makes it non-clickable */
+    cursor: default;
+}
